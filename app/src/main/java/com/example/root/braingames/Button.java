@@ -10,25 +10,13 @@ import android.widget.ImageButton;
 
 public class Button extends ImageButton {
     private int row, col;
-    private boolean clicked;
 
     public Button(MainActivity m, int row, int col) {
         super(m);
         this.row = row;
         this.col = col;
         setScaleType(ScaleType.CENTER_CROP);
-//        setMinimumWidth(10000);
-//        setAdjustViewBounds(true);
-//        setLayoutParams(new LinearLayout.LayoutParams(10000, 10000));
         setBackgroundColor(0xFFFFFF);
-    }
-
-    public int getRow() {
-        return row;
-    }
-
-    public int getCol() {
-        return col;
     }
 
     /**

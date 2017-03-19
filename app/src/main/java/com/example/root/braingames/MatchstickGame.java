@@ -1,25 +1,23 @@
 package com.example.root.braingames;
 
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class MatchstickGame {
-    //time represents the elapsed time since first click in seconds
-    private int time = 0;
+    private Timer timer;
     private MainActivity mainActivity;
-    private boolean firstClick = true;
+    private ImageButton playPause;
+    private boolean playing;
 
-    public MatchstickGame(MainActivity mainActivity){
+    public MatchstickGame(final MainActivity mainActivity){
         this.mainActivity = mainActivity;
         mainActivity.setContentView(R.layout.matchstickgame);
+        playPause = (ImageButton) mainActivity.findViewById(R.id.playPause);
+        playing = true;
         GridLayout gridLayout = (GridLayout) mainActivity.findViewById(R.id.board);
 
         Button[][] buttons = new Button[7][7];
@@ -32,12 +30,12 @@ public class MatchstickGame {
                 else if (row % 2 == 1 && col % 2 == 0)
                     h.setImageResource(R.drawable.matchstick_vertical);
                 buttons[row][col] = h;
-                buttons[row][col].setOnClickListener(view -> {
-                    if (firstClick) {
-                        firstClick = false;
-                        startTimer();
+                buttons[row][col].setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (!timer.paused)
+                            view.setVisibility(View.INVISIBLE);
                     }
-                    view.setVisibility(View.INVISIBLE);
                 });
             }
         }
@@ -46,35 +44,38 @@ public class MatchstickGame {
         for (Button[] b : buttons)
             for (Button button : b)
                 gridLayout.addView(button, button.getParams((1/7.0), (2/21.0)));
-    }
 
-    public void startTimer(){
-        Timer timer = new Timer();
-        TimerTask task = new TimerTask() {
+        startTimer();
+        playPause.setOnClickListener(new OnClickListener() {
             @Override
-            public void run() {
-                mainActivity.runOnUiThread(() -> {
-                    time++;
-                    TextView timeDisp = (TextView) mainActivity.findViewById(R.id.timer);
-                    int hours = time / 3600;
-                    time %= 3600;
-                    int minutes = time / 60;
-                    time %= 60;
-                    int seconds = time;
-                    timeDisp.setText(format(hours) + " : " + format(minutes) + " : " + format(seconds));
-                });
+            public void onClick(View view) {
+                togglePlayPause();
             }
-        };
-
-        timer.schedule(task, 0, 1000);
+        });
+        mainActivity.findViewById(R.id.restart).setOnClickListener(new OnClickListener(){
+            @Override
+            public void onClick(View view){
+                new MatchstickGame(mainActivity);
+            }
+        });
     }
 
-    public String format(int n){
-        String number = Integer.toString(n);
-        if (number.length() == 1)
-            number = "0" + number;
-        if (number.length() == 0)
-            number = "00";
-        return number;
+    public void startTimer() {
+        TextView time = (TextView) mainActivity.findViewById(R.id.timer);
+        timer = new Timer(time, mainActivity);
+        timer.start();
+    }
+
+    public void togglePlayPause(){
+        if (playing){
+            playPause.setImageResource(R.drawable.play_button);
+            timer.pause();
+            playing = false;
+        }
+        else {
+            playPause.setImageResource(R.drawable.pause_button);
+            timer.resume();
+            playing = true;
+        }
     }
 }
