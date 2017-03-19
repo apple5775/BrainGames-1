@@ -1,4 +1,4 @@
-#What we have to do
+## What we have to do
 
 The game looks nice but is not playable.  I think that the top priority should be to create the matching game.
 At this point, the matching game is very easy.  We need to:
@@ -17,7 +17,7 @@ When you get one of these done, just tick it off so we can tell for later.  By t
 [crazy markup syntax](https://help.github.com/articles/basic-writing-and-formatting-syntax/) for their
 README, so you might want to check it out.
 
-#Pushing
+## Pushing
 
 The commands are pretty easy.  Heres a table:
 Command | Function
