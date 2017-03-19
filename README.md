@@ -10,3 +10,7 @@ At this point, the matching game is very easy.  We need to:
   - [ ] Timer
   - [ ] Score
   - [ ] Restart
+
+When you get one of these done, just tick it off so we can tell for later.  By the way, github uses some
+[crazy markup syntax](https://help.github.com/articles/basic-writing-and-formatting-syntax/) for their
+README, so you might want to check it out.
