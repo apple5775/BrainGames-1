@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BrainGames</string>
+    <string name="stips">Remove _ matchsticks\nto form\n_ squares</string>
+    <string name="time">HH : MM : SS</string>
+</resources>
