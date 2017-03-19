@@ -61,16 +61,12 @@ public class MatchstickGame {
                     int minutes = time / 60;
                     time %= 60;
                     int seconds = time;
-                    timeDisp.setText(makeTime(hours, minutes, seconds));
+                    timeDisp.setText(format(hours) + " : " + format(minutes) + " : " + format(seconds));
                 });
             }
         };
 
         timer.schedule(task, 0, 1000);
-    }
-
-    public String makeTime(int hours, int minutes, int seconds){
-        return format(hours) + " : " + format(minutes) + " : " + format(seconds);
     }
 
     public String format(int n){
