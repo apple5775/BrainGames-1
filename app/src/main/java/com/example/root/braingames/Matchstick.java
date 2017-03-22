@@ -1,30 +1,15 @@
 package com.example.root.braingames;
 
 import android.app.Activity;
-import android.content.Context;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
 import android.widget.GridLayout;
-import android.widget.ImageButton;
 
-public class Button extends ImageButton {
+public abstract class Matchstick extends Button {
     private int row, col;
-
-    public Button(MainActivity mainActivity, int row, int col) {
-        super(mainActivity);
+    public Matchstick(MainActivity mainActivity, int row, int col){
+        super(mainActivity, row, col);
         this.row = row;
         this.col = col;
-        setScaleType(ScaleType.CENTER_CROP);
-        setBackgroundColor(0xFFFFFF);
-    }
-
-    public int getRow(){
-        return row;
-    }
-
-    public int getCol(){
-        return col;
     }
 
     /**
