@@ -3,7 +3,7 @@ package com.example.root.braingames;
 import android.graphics.Color;
 import android.widget.GridLayout;
 
-public class MatchingGame {
+public class MatchingGame implements StateChange {
     public MatchingGame(MainActivity mainActivity){
         mainActivity.setContentView(R.layout.matchinggame);
         GridLayout gridLayout = (GridLayout) mainActivity.findViewById(R.id.board);
@@ -20,4 +20,7 @@ public class MatchingGame {
             for (Button button : row)
                 gridLayout.addView(button, button.getParams(1/4, 1/4));
     }
+
+    public void pauseActivity(){}
+    public void resumeActivity(){}
 }
