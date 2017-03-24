@@ -1,7 +1,12 @@
-package com.example.root.braingames;
+package com.example.root.braingames.Matching;
 
 import android.graphics.Color;
 import android.widget.GridLayout;
+
+import com.example.root.braingames.Button;
+import com.example.root.braingames.MainActivity;
+import com.example.root.braingames.R;
+import com.example.root.braingames.StateChange;
 
 public class MatchingGame implements StateChange {
     public MatchingGame(MainActivity mainActivity){

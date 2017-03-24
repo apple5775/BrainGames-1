@@ -40,3 +40,7 @@ we just need to check n * 2^24 possibilities maximum.  Now, on to the problem of
 First, we can remove extraneous matches by removing all matches that are only touching one other match.  Then, the number of squares in
 a rectangle of size n x m can be represented as (1/6) * n * (n+1) * (3m-n+1) assuming m >= n.  However, I don't know what we can do from 
 there, so we should meet up to figure this out with some big old white boards.
+
+#### Edit
+
+We are almost done with Matchsticks.  All we have left to do is to generate stipulations.

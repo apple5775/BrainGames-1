@@ -3,6 +3,8 @@ package com.example.root.braingames;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.root.braingames.Matchsticks.MatchstickGame;
+
 public class MainActivity extends AppCompatActivity implements StateChange {
     private StateChange inFocus;
     @Override
@@ -15,11 +17,13 @@ public class MainActivity extends AppCompatActivity implements StateChange {
         inFocus = mg2;
     }
 
+    @Override
     public void onPause(){
         super.onPause();
         inFocus.pauseActivity();
     }
 
+    @Override
     public void onResume(){
         super.onResume();
         inFocus.resumeActivity();
