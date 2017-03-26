@@ -6,6 +6,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.GridLayout;
 
 import com.example.root.braingames.Button;
 import com.example.root.braingames.MainActivity;
@@ -23,7 +24,7 @@ public class MatchstickGame implements StateChange {
         this.mainActivity = mainActivity;
         mainActivity.setContentView(R.layout.matchstickgame);
         board = new Board(mainActivity, this);
-        ((LinearLayout) mainActivity.findViewById(R.id.board)).addView(board);
+        ((GridLayout) mainActivity.findViewById(R.id.board)).addView(board);
 
         generateProblem();
         TextView time = (TextView) mainActivity.findViewById(R.id.timer);
