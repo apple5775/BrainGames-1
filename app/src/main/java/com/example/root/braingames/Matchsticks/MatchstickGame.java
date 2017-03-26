@@ -52,13 +52,14 @@ public class MatchstickGame implements StateChange {
         timer.resume();
     }
 
-    public void registerClick(){
-        if (++clicksDone == clicksAllowed)
+    public void registerClick() {
+        if (++clicksDone == clicksAllowed){
             if (hasExtraneous())
                 Log.i("Win status", "Lose");
-        if (getSquares() == squaresGoal)
-            Log.i("win status", "Win!");
-        new MatchstickGame(mainActivity);
+            if (getSquares() == squaresGoal)
+                Log.i("win status", "Win!");
+            new MatchstickGame(mainActivity);
+        }
     }
 
     public void generateProblem(){
@@ -88,10 +89,8 @@ public class MatchstickGame implements StateChange {
     }
 
     public boolean hasExtraneous(){
-        for (Button[] b : board.sticks)
-            for (Button button : b) {
-                int row = button.getRow();
-                int col = button.getCol();
+        for (int row=0; row<7; row++)
+            for (int col=(row+1)%2; col<7; col += 2){
                 boolean foundLeft = false;
                 boolean foundRight = false;
                 //These checks are used for all maps

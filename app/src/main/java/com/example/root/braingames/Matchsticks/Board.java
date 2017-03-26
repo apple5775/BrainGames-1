@@ -31,22 +31,15 @@ public class Board extends GridLayout {
         boardOnClickListener = new OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean found = false;
-                int row=0, col=0;
-                if (!matchstickGame.timer.paused) {
-                    for (row = 0; row < 7; row++) {
-                        for (col = 0; col < 7; col++) {
-                            if (sticks[row][col] != null && v == sticks[row][col]) {
-                                sticks[row][col].setVisibility(View.INVISIBLE);
-                                found = true;
-                                break;
-                            }
-                        }
-                        if (found) break;
-                    }
-                    if (found) {
-                        clickMap[row][col] = 0;
-                        //matchstickGame.registerClick();    //Welp
+//                boolean found = false;
+//                int row=0, col=0;
+                Log.i("Listener", "V may or may not be null");
+                if (!matchstickGame.timer.paused){
+                       if (v != null) {
+                            v.setVisibility(View.INVISIBLE);
+                            clickMap[((Button)v).getRow()][((Button)v).getCol()] = 0;
+                            matchstickGame.registerClick();    //Welp
+                            Log.i("Listener", "The listener was called");
                     }
                 }
             }
@@ -68,35 +61,6 @@ public class Board extends GridLayout {
                 }
                 if (isButton == true) {
                     button.setOnClickListener(boardOnClickListener);
-                    /*button.setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            toggleMatchButton(v);
-                        }
-                    }); */
-                    /*button.setOnClickListener(new OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Button justClicked = (Button) view;
-                            //button.setImageResource(R.drawable.play_button);
-                            Log.i("clocked button", "clicked"); //dbg
-
-                            if (!matchstickGame.timer.paused) {
-                                //view.setVisibility(view.INVISIBLE);
-                                Log.i("Time not paused", "ïnvisible");
-                                Log.d("Button Row", "" + justClicked.getRow());
-                                Log.d("Button Col", "" + justClicked.getCol());
-                                //Button curbut = sticks[justClicked.getRow()][justClicked.getCol()];
-                                //justClicked.setVisibility(view.GONE);
-                                sticks[4][3].setImageResource(R.drawable.play_button);
-                                Log.d("Still here?", "Hmm");
-                                //justClicked.setVisibility(justClicked.INVISIBLE);
-
-                            }
-                            clickMap[justClicked.getRow()][justClicked.getCol()] = 0;
-                            matchstickGame.registerClick();
-                        }
-                    });*/
                     sticks[row][col] = button;
                     boardLayout.addView(sticks[row][col], sticks[row][col].getParams((1 / 7.0), (2 / 21.0)));
 
@@ -107,31 +71,6 @@ public class Board extends GridLayout {
             }
         }
     }
-
-    /* Not used
-    public void toggleMatchButton(View view){
-        Button justClicked = (Button) view;
-        sticks[3][4].setVisibility(View.GONE);
-        //button.setImageResource(R.drawable.play_button);
-        Log.i("clocked button", "clicked"); //dbg
-
-        if (!matchstickGame.timer.paused){
-            //view.setVisibility(view.INVISIBLE);
-            Log.i("Time not paused", "ïnvisible");
-            Log.d("Button Row", "" + justClicked.getRow());
-            Log.d("Button Col", "" + justClicked.getCol());
-            //Button curbut = sticks[justClicked.getRow()][justClicked.getCol()];
-            //justClicked.setVisibility(view.GONE);
-            //sticks[4][3].setVisibility(View.GONE);
-            Log.d("Still here?", "Hmm");
-            //justClicked.setVisibility(justClicked.INVISIBLE);
-
-            justClicked.setImageResource(R.drawable.play_button);
-            clickMap[justClicked.getRow()][justClicked.getCol()] = 0;
-            matchstickGame.registerClick();
-        }
-     }
-     */
 
     public String toString(){
         String rString = "";
