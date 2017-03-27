@@ -72,11 +72,15 @@ public class Board extends GridLayout {
         }
     }
 
-    public String toString(){
+    public String toString() {
         String rString = "";
-        for (int[] row : clickMap)
-            for (int el : row)
+        for (int[] row : clickMap){
+            for (int el : row){
                 rString += Integer.toString(el);
+                System.out.print(el + " ");
+            }
+            System.out.println();
+        }
         return rString;
     }
 }

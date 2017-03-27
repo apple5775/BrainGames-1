@@ -88,50 +88,69 @@ public class MatchstickGame implements StateChange {
         }
     }
 
+    /*
+        0 1 2
+        3   4
+        5 6 7
+     */
+
     public boolean hasExtraneous(){
         for (int row=0; row<7; row++)
-            for (int col=(row+1)%2; col<7; col += 2){
+            for (int col=(row+1)%2; col<7; col += 2) {
                 boolean foundLeft = false;
                 boolean foundRight = false;
+                boolean[] directions = new boolean[8];
                 //These checks are used for all maps
-                if (col > 0 && row > 0 && board.clickMap[row - 1][col - 1] == 1)
+                if (col > 0 && row > 0 && board.clickMap[row - 1][col - 1] != 0)
+                    directions[0] = true;
+                if (col > 0 && row < 6 && board.clickMap[row + 1][col - 1] != 0)
+                    directions[5] = true;
+                if (col < 6 && row > 0 && board.clickMap[row - 1][col + 1] != 0)
+                    directions[2] = true;
+                if (col < 6 && row < 6 && board.clickMap[row + 1][col + 1] != 0)
+                    directions[7] = true;
+
+                if (col > 1 && board.clickMap[row][col - 2] != 0)
+                    directions[3] = true;
+                if (col < 5 && board.clickMap[row][col + 2] != 0)
+                    directions[4] = true;
+
+                if (row > 1 && board.clickMap[row - 2][col] != 0)
+                    directions[1] = true;
+                if (row < 5 && board.clickMap[row + 2][col] != 0)
+                    directions[6] = true;
+
+                //If it is horizontal
+                if (row % 2 == 0 && directions[0] || directions[3] || directions[5])
                     foundLeft = true;
-                else if (col > 0 && row < 6 && board.clickMap[row + 1][col - 1] == 1)
+                if (row % 2 == 0 && directions[2] || directions[4] || directions[7])
+                    foundRight = true;
+
+                //If vertical
+                //left = top
+                //right = bottom
+                if (row % 2 == 1 && directions[0] || directions[1] || directions[2])
                     foundLeft = true;
-                if (col < 6 && row > 0 && board.clickMap[row - 1][col + 1] == 1)
-                    foundRight = true;
-                else if (col < 6 && row < 6 && board.clickMap[row + 1][col + 1] == 1)
+                if (row % 2 == 1 && directions[5] || directions[6] || directions[7])
                     foundRight = true;
 
-                //If it is horizontal and both sides haven't been found
-                if (row % 2 == 0 && !(foundRight && foundLeft)) {
-                    if (col > 1 && board.clickMap[row][col - 2] == 1)
-                        foundLeft = true;
-                    if (col < 5 && board.clickMap[row][col + 2] == 1)
-                        foundRight = true;
-                }
-
-                //If it is vertical and both sides haven't been found
-                //foundRight indicates if it found the top here
-                //foundLeft indicates if it found the bottom here
-                if (row % 2 == 1 && !(foundRight && foundLeft)) {
-                    if (row > 1 && board.clickMap[row - 2][col] == 1)
-                        foundLeft = true;
-                    if (row < 5 && board.clickMap[row + 2][col] == 1)
-                        foundRight = true;
-                }
-
-                //If it didn't find one side, the stick is extraneous
-                if (!foundLeft || !foundRight)
+                if (!foundLeft || !foundRight){
+                    String notFound = "left";
+                    if (!foundRight)
+                        notFound = "right";
+                    if (!foundRight && !foundLeft)
+                        notFound = "both";
+                    Log.i("Found", "Row: " + row + " Col: " + col + " Didn't find: " + notFound);
                     return true;
+                }
             }
         return false;
     }
 
     public int getSquares(){
         String clickMap = board.toString();
-        String oXoReg = "020[0-2]{4}101[0-2]{4}020";
-        String twXtwReg = "02020[0-2]{2}1[0-2]{3}1[0-2]{9}1[0-2]{3}1[0-2]{2}02020";
+        String oXoReg = "020[0-2]{4}101[0-2]{4}020[0-2]*";
+        String twXtwReg = "02020[0-2]{2}1[0-2]{3}1[0-2]{9}1[0-2]{3}1[0-2]{2}02020[0-2]*";
         String thXthReg = "02020201[0-2]{5}1[0-2]{7}1[0-2]{5}1[0-2]{7}1[0-2]{5}10202020";
         int totalCount = 0;
         //Check for 1x1 squares and 2x2 squares
