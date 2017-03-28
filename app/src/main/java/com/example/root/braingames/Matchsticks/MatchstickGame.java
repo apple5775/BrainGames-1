@@ -121,17 +121,17 @@ public class MatchstickGame implements StateChange {
                     directions[6] = true;
 
                 //If it is horizontal
-                if (row % 2 == 0 && directions[0] || directions[3] || directions[5])
+                if (row % 2 == 0 && (directions[0] || directions[3] || directions[5]))
                     foundLeft = true;
-                if (row % 2 == 0 && directions[2] || directions[4] || directions[7])
+                if (row % 2 == 0 && (directions[2] || directions[4] || directions[7]))
                     foundRight = true;
 
                 //If vertical
                 //left = top
                 //right = bottom
-                if (row % 2 == 1 && directions[0] || directions[1] || directions[2])
+                if (row % 2 == 1 && (directions[0] || directions[1] || directions[2]))
                     foundLeft = true;
-                if (row % 2 == 1 && directions[5] || directions[6] || directions[7])
+                if (row % 2 == 1 && (directions[5] || directions[6] || directions[7]))
                     foundRight = true;
 
                 if (!foundLeft || !foundRight){
