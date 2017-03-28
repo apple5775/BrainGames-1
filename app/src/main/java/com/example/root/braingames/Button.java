@@ -1,15 +1,12 @@
 package com.example.root.braingames;
 
 import android.app.Activity;
-import android.content.Context;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 
 public class Button extends ImageButton {
+    public static double[] MATCHSTICK_PARAMS = {1/7.0, 2/21.0};
     private int row, col;
 
     public Button(MainActivity mainActivity, int row, int col) {
@@ -47,5 +44,9 @@ public class Button extends ImageButton {
         layoutParams.height = (int)(displayMetrics.heightPixels * cellHeightFraction);
 
         return layoutParams;
+    }
+
+    public GridLayout.LayoutParams getParams(double[] cellDimens){
+        return getParams(cellDimens[0], cellDimens[1]);
     }
 }
