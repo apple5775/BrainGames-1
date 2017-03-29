@@ -6,7 +6,7 @@ import android.widget.GridLayout;
 import android.widget.ImageButton;
 
 public class Button extends ImageButton {
-    public static double[] MATCHSTICK_PARAMS = {1/7.0, 2/21.0};
+    public static double[] MATCHSTICK_PARAMS = {(1/7.0), (2/21.0)};
     private int row, col;
 
     public Button(MainActivity mainActivity, int row, int col) {

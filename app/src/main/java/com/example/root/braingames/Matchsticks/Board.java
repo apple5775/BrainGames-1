@@ -48,7 +48,7 @@ public class Board extends GridLayout {
                     button.setImageResource(R.drawable.matchstick_horizontal);
                 if (row % 2 == 1 && col % 2 == 0)
                     button.setImageResource(R.drawable.matchstick_vertical);
-                if (row % 2 == col % 2) {
+                if (row % 2 != col % 2) {
                     button.setOnClickListener(boardOnClickListener);
                     sticks[row][col] = button;
                     addView(sticks[row][col], sticks[row][col].getParams(Button.MATCHSTICK_PARAMS));
@@ -62,7 +62,7 @@ public class Board extends GridLayout {
         for (int r=0; r<7; r++)
             for (int c=0; c<7; c++)
                 if (r % 2 != c % 2)
-                    defaultBoard[r][c] = ((r%2) + 2) % 2;
+                    defaultBoard[r][c] = (c%2)+1;
         return defaultBoard;
     }
 
@@ -73,6 +73,7 @@ public class Board extends GridLayout {
     public static boolean hasExtraneous(int[][] clicks){
         for (int row=0; row<7; row++)
             for (int col=(row+1)%2; col<7; col += 2) {
+//             for (int col=0; col<7; col++){
                 boolean foundLeft = false;
                 boolean foundRight = false;
                 boolean[] directions = new boolean[8];
@@ -110,8 +111,17 @@ public class Board extends GridLayout {
                 if (row % 2 == 1 && (directions[5] || directions[6] || directions[7]))
                     foundRight = true;
 
-                if (!foundLeft || !foundRight)
+                if (!foundLeft || !foundRight) {
+/**
+                    String notFound = "left";
+                    if (!foundRight)
+                        notFound = "right";
+                    if (!foundLeft && !foundLeft)
+                        notFound = "either";
+                    Log.i("Rval", "Row: " + row + " Col: " + col + " Not found: " + notFound);
+*/
                     return true;
+                }
             }
         return false;
     }

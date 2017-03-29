@@ -21,6 +21,7 @@ public class MatchstickGame implements StateChange {
     private MainActivity mainActivity;
     private Board board;
     private int squaresGoal, clicksAllowed, clicksDone;
+    private int[][] winMap;
 
     public MatchstickGame(final MainActivity mainActivity){
         this.mainActivity = mainActivity;
@@ -65,9 +66,10 @@ public class MatchstickGame implements StateChange {
     }
 
     public void generateProblem(){
-        clicksAllowed = (int)(Math.random() * 8) + 3;
-        int[][] clickMap = null;
-        while (true){
+        clicksAllowed = (int)(Math.random() * 5) + 3;
+        int[][] clickMap = Board.makeDefaultBoard();
+        boolean tryAgain = true;
+        while (tryAgain){
             clickMap = Board.makeDefaultBoard();
             HashSet<Integer> toRemove = new HashSet<>();
             while (toRemove.size() < clicksAllowed){
@@ -78,9 +80,9 @@ public class MatchstickGame implements StateChange {
             }
             for (int el : toRemove)
                 clickMap[el/7][el%7] = 0;
-            if (!Board.hasExtraneous(clickMap))
-                break;
+            tryAgain = Board.hasExtraneous(clickMap);
         }
+        winMap = clickMap;
         squaresGoal = Board.getSquares(clickMap);
         TextView stip = (TextView) mainActivity.findViewById(R.id.stip);
         String text = "Remove " + clicksAllowed + " matchsticks \n to form \n " + squaresGoal;
