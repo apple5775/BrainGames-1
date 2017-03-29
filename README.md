@@ -17,6 +17,12 @@ When you get one of these done, just tick it off so we can tell for later.  By t
 [crazy markup syntax](https://help.github.com/articles/basic-writing-and-formatting-syntax/) for their
 README, so you might want to check it out.
 
+## Matchsticks update
+
+I wrote the gen stip code, and it is functional now.  I found 7 sticks to be the upper bound, and 8 leads to games
+only with 0 squares, which is bad.  So, I remade the stip upper bound and it is all working.  Yay!  Now, we have to
+write the win/lose stuff.
+
 ## Pushing
 
 The commands are pretty easy.  Heres a table:
@@ -30,17 +36,3 @@ git push -u <remote_name> master | Pushes the added file to github.
 
 You should only have to do `git init` and `git remote add <remote_name> <repo_URL>` once.  However, when you add something
 it should go add, commit, then push.
-
-## Some thoughts on Matchsticks
-
-I have finished all of the properties of the game except the generating of stipulations (remove n matchsticks to create m squares)
-and determining the number of squares created.  So, for the generating of the stipulations, I think the best way to go is to generate
-two random numbers and use a brute force method to check if it is possible.  If a pair (n, m) is generated, and both can be restricted, 
-we just need to check n * 2^24 possibilities maximum.  Now, on to the problem of determining the number of squares in an arbitrary grid.
-First, we can remove extraneous matches by removing all matches that are only touching one other match.  Then, the number of squares in
-a rectangle of size n x m can be represented as (1/6) * n * (n+1) * (3m-n+1) assuming m >= n.  However, I don't know what we can do from 
-there, so we should meet up to figure this out with some big old white boards.
-
-#### Edit
-
-We are almost done with Matchsticks.  All we have left to do is to generate stipulations.

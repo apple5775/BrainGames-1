@@ -73,7 +73,6 @@ public class Board extends GridLayout {
     public static boolean hasExtraneous(int[][] clicks){
         for (int row=0; row<7; row++)
             for (int col=(row+1)%2; col<7; col += 2) {
-//             for (int col=0; col<7; col++){
                 boolean foundLeft = false;
                 boolean foundRight = false;
                 boolean[] directions = new boolean[8];
