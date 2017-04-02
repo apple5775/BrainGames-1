@@ -37,7 +37,10 @@ It uses two ImageButtons to select which game to play and uses intent to start t
 - GameOver.java:
 It is an Activity that gets called by the games to declare the status of the game.
 It also has a button to start the MainActivity again.
-
+- activity_main.xml:
+Game descripitions and two buttons to start games.
+- gameover.xml
+Says if you win or lose at end of game with play again. Play again goes to main activity screen.
 
 ## Pushing
 
