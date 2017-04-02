@@ -2,14 +2,13 @@ package com.example.root.braingames.Matchsticks;
 
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.GridLayout;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.app.Activity;
 
 import com.example.root.braingames.Button;
-import com.example.root.braingames.MainActivity;
+//import com.example.root.braingames.MainActivity;
 import com.example.root.braingames.R;
 
 public class Board extends GridLayout {
@@ -17,7 +16,7 @@ public class Board extends GridLayout {
     public Button[][] sticks;
     private MatchstickGame matchstickGame;
 
-    public Board(MainActivity mainActivity, MatchstickGame matchstickG) {
+    public Board(Activity mainActivity, MatchstickGame matchstickG) {
         super(mainActivity);
         setColumnCount(7);
         setRowCount(7);
@@ -30,12 +29,18 @@ public class Board extends GridLayout {
         boardOnClickListener = new OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("Board", "clicked");
                 if (!matchstickGame.timer.paused){
+                       Log.d("Board", "timer not paused");
                        if (v != null) {
-                            v.setVisibility(View.INVISIBLE);
+                            Log.d("Board", "before setting invisible");
+                            //v.setVisibility(View.INVISIBLE);
+                            v.setVisibility(View.GONE);
                             clickMap[((Button)v).getRow()][((Button)v).getCol()] = 0;
                             matchstickGame.registerClick();
-                    }
+                        } else {
+                           Log.d("Board", "view is null");
+                       }
                 }
             }
 

@@ -9,7 +9,7 @@ public class Button extends ImageButton {
     public static double[] MATCHSTICK_PARAMS = {(1/7.0), (2/21.0)};
     private int row, col;
 
-    public Button(MainActivity mainActivity, int row, int col) {
+    public Button(Activity mainActivity, int row, int col) {
         super(mainActivity);
         this.row = row;
         this.col = col;

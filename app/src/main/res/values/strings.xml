@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">BrainGames</string>
     <string name="stips">Remove _ matchsticks\nto form\n_ squares</string>
-    <string name="time">HH : MM : SS</string>
+    <string name="time">HH : MM : SS</string>"
+    <string name="matchstick"><center><b>Match Stick Game</b></center> \n \n
+        Remove a specified number of match sticks to for a specified number of squares.\n
+        All squares are counted and each match must be part of a square.
+    </string>
+    <string name="matching"><center><b>Matching Game</b></center> \n \nMatch pairs of images</string>
 </resources>

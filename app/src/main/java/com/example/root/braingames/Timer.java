@@ -1,6 +1,7 @@
 package com.example.root.braingames;
 
 import android.util.Log;
+import android.app.Activity;
 import android.widget.TextView;
 import java.util.TimerTask;
 
@@ -9,10 +10,10 @@ public class Timer {
     private java.util.Timer timer;
     private TimerTask task, backupTask;
     private TextView textView;
-    private MainActivity mainActivity;
+    private Activity mainActivity;
     public boolean paused;
 
-    public Timer(TextView text, MainActivity main){
+    public Timer(TextView text, Activity main){
         textView = text;
         mainActivity = main;
         time = 0;
