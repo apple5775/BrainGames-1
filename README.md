@@ -23,18 +23,18 @@ I wrote the gen stip code, and it is functional now.  I found 7 sticks to be the
 only with 0 squares, which is bad.  So, I remade the stip upper bound and it is all working.  Yay!  Now, we have to
 write the win/lose stuff.
 
-## Kenny's update 4/1/17
--AndroidManifest.xml: 
+# Kenny's update 4/1/17
+- AndroidManifest.xml: 
 Added two activities GameOver and MatchstickGame for send and receive intent to work. MatchstickGame and GameOver can be started as new activities. 
--Board.java, Button.java, Timer.java:
+- Board.java, Button.java, Timer.java:
 Changed the Board and Button and Timer constructor to use Activity instead of MainActivity as its parameter. 
--MatchstickGame.java:
+- MatchstickGame.java:
 It extends Activity class now as an individucal activity and can be started by passing intent. 
 The restart button now calls a "restart()" procedure and does not construct a new MatchstickGame object.
 The registerClick method is changed to use intent to start the GameOver activity.
--MainActivity.java:
+- MainActivity.java:
 It uses two ImageButtons to select which game to play and uses intent to start the games as Activities. 
--GameOver.java:
+- GameOver.java:
 It is an Activity that gets called by the games to declare the status of the game.
 It also has a button to start the MainActivity again.
 
