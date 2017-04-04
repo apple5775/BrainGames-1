@@ -27,7 +27,7 @@ public class GameOver extends Activity {
         from = null;
         try {
             from = Class.forName(overIntent.getStringExtra("FROM_CLASS"));
-        } catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             Log.i("Error", "Didn't find from class");
         }
 
@@ -36,21 +36,27 @@ public class GameOver extends Activity {
 
         if (winLose.equals("gameWon")) {
             text = "Game Over!" + "\n You won!";
-        } else if (winLose.equals("gameLost")){
+        } else if (winLose.equals("gameLost")) {
             text = "Game Over!" + "\n Sorry, you lost.";
         } else {
             text = "Game Over!";
         }
-        TextView statusView= (TextView) findViewById(R.id.status);
+        TextView statusView = (TextView) findViewById(R.id.status);
         statusView.setText(text);
 
-        ImageButton menu =(ImageButton)findViewById(R.id.menu);
+        if (winningMap != ""){
+            Board board = new Board(this, winningMap);
+            ((LinearLayout)findViewById(R.id.solution)).addView(board);
+        }
+
+        ImageButton menu = (ImageButton) findViewById(R.id.menu);
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent (GameOver.this, MainActivity.class);
+                Intent playIntent = new Intent(GameOver.this, MainActivity.class);
                 playIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(playIntent);
+                finish();
             }
         });
 
@@ -61,10 +67,8 @@ public class GameOver extends Activity {
                 Intent restartPast = new Intent(GameOver.this, from);
                 restartPast.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(restartPast);
+                finish();
             }
         });
-
-        //We now have access to the solution for the given matchstick puzzle which we can then show
-        //However, we can do that tomorrow because it is really late right now.
     }
 }

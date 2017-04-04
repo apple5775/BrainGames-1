@@ -1,5 +1,6 @@
 package com.example.root.braingames.Matchsticks;
 
+import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
@@ -57,9 +58,26 @@ public class Board extends GridLayout {
         }
     }
 
-    public Board(MatchstickGame matchstickG, String goal){
-        this(matchstickG);
+    public Board(Activity activity, String goal){
+        super(activity);
         int[][] goalMap = stringToArray(goal);
+        sticks = new Button[7][7];
+        clickMap = makeDefaultBoard();
+        Log.i("Stat", "Made the map");
+        for (int row=0; row<7; row++){
+            for (int col=0; col<7; col++){
+                Button button = new Button(activity, row, col);
+                if (row % 2 == 0 && col % 2 == 1)
+                    button.setImageResource(R.drawable.matchstick_horizontal);
+                if (row % 2 == 1 && col % 2 == 0)
+                    button.setImageResource(R.drawable.matchstick_vertical);
+                if (row % 2 != col % 2) {
+                    sticks[row][col] = button;
+                    addView(sticks[row][col], sticks[row][col].getParams(Button.MATCHSTICK_PARAMS));
+                }
+            }
+        }
+        Log.i("Stat", "Made the board");
         for (int row=0; row<7; row++){
             for (int col=0; col<7; col++) {
                 int pos = (row*7) + col;
@@ -69,6 +87,7 @@ public class Board extends GridLayout {
                 }
             }
         }
+        Log.i("Stat", "adjusted board");
     }
 
     public static int[][] makeDefaultBoard(){
@@ -172,9 +191,12 @@ public class Board extends GridLayout {
 
     public static int[][] stringToArray(String cms){
         int[][] clickMap = new int[7][7];
+        int counter = 0;
         for (int row=0; row<7; row++)
-            for (int col=0; col<7; col++)
-                clickMap[row][col] = Integer.parseInt(cms.substring((row*7)+col, (row*7)+col));
+            for (int col=0; col<7; col++) {
+                String s = cms.substring(counter, ++counter);
+                clickMap[row][col] = Integer.parseInt(s);
+            }
         return clickMap;
     }
 }

@@ -67,6 +67,7 @@ public class MatchstickGame extends Activity {
         Intent restarter = new Intent(this, MatchstickGame.class);
         restarter.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(restarter);
+        finish();
     }
 
     public void registerClick() {
@@ -93,6 +94,7 @@ public class MatchstickGame extends Activity {
                 newGameIntent.putExtra("WINNING_MAP", Board.arrayToString(winningMap));
                 startActivity(newGameIntent);
             }
+            finish();
         }
     }
 
