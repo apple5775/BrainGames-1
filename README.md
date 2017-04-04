@@ -42,6 +42,11 @@ Game descripitions and two buttons to start games.
 - gameover.xml
 Says if you win or lose at end of game with play again. Play again goes to main activity screen.
 
+#### Theo's update 4/3/17
+Took everything that you added with the intent and simplified it a little.  It was pretty complicated for no reason, and I think you
+just needed another pair of eyes on it.  Also updated the GameOver to have a button to bring you back to the exited activity using 
+Class<?> and prepared to display the solution clickMap for a matchsticks game.
+
 ## Pushing
 
 The commands are pretty easy.  Heres a table:

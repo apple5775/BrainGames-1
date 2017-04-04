@@ -1,14 +1,14 @@
 package com.example.root.braingames.Matching;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.widget.GridLayout;
 
 import com.example.root.braingames.Button;
 import com.example.root.braingames.MainActivity;
 import com.example.root.braingames.R;
-import com.example.root.braingames.StateChange;
 
-public class MatchingGame implements StateChange {
+public class MatchingGame extends Activity {
     public MatchingGame(MainActivity mainActivity){
         mainActivity.setContentView(R.layout.matchinggame);
         GridLayout gridLayout = (GridLayout) mainActivity.findViewById(R.id.board);

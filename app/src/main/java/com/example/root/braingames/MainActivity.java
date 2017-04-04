@@ -11,21 +11,16 @@ import android.util.Log;
 import com.example.root.braingames.Matching.MatchingGame;
 import com.example.root.braingames.Matchsticks.MatchstickGame;
 
-//public class MainActivity extends AppCompatActivity implements StateChange {
-  public class MainActivity extends Activity implements StateChange {
-    private StateChange inFocus;
+public class MainActivity extends Activity {
     public ImageButton gameButton1, gameButton2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //super.onCreate(null);
         setContentView(R.layout.activity_main);
 
-        //Intent newMainIntent = getIntent();
-        inFocus = this;
         gameButton1 = (ImageButton) findViewById(R.id.msGameButton);
-        gameButton1.setImageResource(R.drawable.matchstick_horizontal);
+//        gameButton1.setImageResource(R.drawable.matchstick_horizontal);
         gameButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,31 +39,26 @@ import com.example.root.braingames.Matchsticks.MatchstickGame;
             @Override
             public void onClick(View v) {
                 Log.i("Intent button", "clicked");
-                /*Intent gameIntent = new Intent(MainActivity.this, MatchstickGame.class);
-                startActivity(gameIntent);*/
-                MatchingGame mg = new MatchingGame(MainActivity.this);
-                MainActivity.this.inFocus = mg;
+                Intent matching = new Intent(MainActivity.this, MatchingGame.class);
+                matching.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(matching);
             }
         });
-        /*
-        MatchingGame mg1 = new MatchingGame(this);
-        MatchstickGame mg2 = new MatchstickGame(this);
-        inFocus = mg2; */
     }
 
     @Override
     public void onPause(){
         super.onPause();
-        inFocus.pauseActivity();
+//        inFocus.pauseActivity();
     }
 
     @Override
     public void onResume(){
         super.onResume();
-        inFocus.resumeActivity();
+//        inFocus.resumeActivity();
     }
 
-    public void pauseActivity(){}
-    public void resumeActivity(){}
+//    public void pauseActivity(){}
+//    public void resumeActivity(){}
 
 }

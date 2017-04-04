@@ -10,18 +10,18 @@ public class Timer {
     private java.util.Timer timer;
     private TimerTask task, backupTask;
     private TextView textView;
-    private Activity mainActivity;
+    private Activity uiThread;
     public boolean paused;
 
-    public Timer(TextView text, Activity main){
+    public Timer(TextView text, Activity ui){
         textView = text;
-        mainActivity = main;
+        this.uiThread = ui;
         time = 0;
         timer = new java.util.Timer();
         task = new TimerTask() {
             @Override
             public void run() {
-                mainActivity.runOnUiThread(new Runnable() {
+                uiThread.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         time++;
@@ -59,7 +59,7 @@ public class Timer {
             TimerTask t = new TimerTask() {
                 @Override
                 public void run() {
-                    mainActivity.runOnUiThread(new Runnable() {
+                    uiThread.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             time++;

@@ -1,17 +1,19 @@
 package com.example.root.braingames;
 
-/**
- * Created by kenny on 3/31/17.
- */
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
+import android.widget.GridLayout;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.util.Log;
 
+import com.example.root.braingames.Matchsticks.Board;
+
 public class GameOver extends Activity {
+    private Class<?> from;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -20,6 +22,15 @@ public class GameOver extends Activity {
 
         Intent overIntent = getIntent();
         String winLose = overIntent.getStringExtra("GAME_STATUS");
+        String winningMap = overIntent.getStringExtra("WINNING_MAP");
+
+        from = null;
+        try {
+            from = Class.forName(overIntent.getStringExtra("FROM_CLASS"));
+        } catch (ClassNotFoundException e){
+            Log.i("Error", "Didn't find from class");
+        }
+
         Log.i("In Game Over", winLose);
         String text;
 
@@ -33,17 +44,27 @@ public class GameOver extends Activity {
         TextView statusView= (TextView) findViewById(R.id.status);
         statusView.setText(text);
 
-        ImageButton playAgain=(ImageButton)findViewById(R.id.playAgainButton);
-        playAgain.setImageResource(R.drawable.play_button);
-
-        playAgain.setOnClickListener(new View.OnClickListener() {
+        ImageButton menu =(ImageButton)findViewById(R.id.menu);
+        menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent playIntent = new Intent (GameOver.this, MainActivity.class);
                 playIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(playIntent);
-                finish();
             }
         });
+
+        ImageButton restart = (ImageButton) findViewById(R.id.restart);
+        restart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent restartPast = new Intent(GameOver.this, from);
+                restartPast.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(restartPast);
+            }
+        });
+
+        //We now have access to the solution for the given matchstick puzzle which we can then show
+        //However, we can do that tomorrow because it is really late right now.
     }
 }

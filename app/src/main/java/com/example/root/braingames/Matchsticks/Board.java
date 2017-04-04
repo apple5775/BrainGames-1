@@ -3,12 +3,8 @@ package com.example.root.braingames.Matchsticks;
 import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.app.Activity;
 
 import com.example.root.braingames.Button;
-//import com.example.root.braingames.MainActivity;
 import com.example.root.braingames.R;
 
 public class Board extends GridLayout {
@@ -16,8 +12,8 @@ public class Board extends GridLayout {
     public Button[][] sticks;
     private MatchstickGame matchstickGame;
 
-    public Board(Activity mainActivity, MatchstickGame matchstickG) {
-        super(mainActivity);
+    public Board(MatchstickGame matchstickG) {
+        super(matchstickG);
         setColumnCount(7);
         setRowCount(7);
 
@@ -34,8 +30,7 @@ public class Board extends GridLayout {
                        Log.d("Board", "timer not paused");
                        if (v != null) {
                             Log.d("Board", "before setting invisible");
-                            //v.setVisibility(View.INVISIBLE);
-                            v.setVisibility(View.GONE);
+                            v.setVisibility(View.INVISIBLE);
                             clickMap[((Button)v).getRow()][((Button)v).getCol()] = 0;
                             matchstickGame.registerClick();
                         } else {
@@ -48,7 +43,7 @@ public class Board extends GridLayout {
 
         for (int row = 0; row < 7; row++) {
             for (int col = 0; col < 7; col++) {
-                Button button = new Button(mainActivity, row, col);
+                Button button = new Button(matchstickGame, row, col);
                 if (row % 2 == 0 && col % 2 == 1)
                     button.setImageResource(R.drawable.matchstick_horizontal);
                 if (row % 2 == 1 && col % 2 == 0)
@@ -57,6 +52,20 @@ public class Board extends GridLayout {
                     button.setOnClickListener(boardOnClickListener);
                     sticks[row][col] = button;
                     addView(sticks[row][col], sticks[row][col].getParams(Button.MATCHSTICK_PARAMS));
+                }
+            }
+        }
+    }
+
+    public Board(MatchstickGame matchstickG, String goal){
+        this(matchstickG);
+        int[][] goalMap = stringToArray(goal);
+        for (int row=0; row<7; row++){
+            for (int col=0; col<7; col++) {
+                int pos = (row*7) + col;
+                if (goalMap[row][col] == 0 && clickMap[row][col] != 0){
+                    clickMap[row][col] = 0;
+                    sticks[row][col].setVisibility(View.INVISIBLE);
                 }
             }
         }
@@ -135,10 +144,7 @@ public class Board extends GridLayout {
     }
 
     public static int getSquares(int[][] clicks){
-        String clickMapString = "";
-        for (int[] row : clicks)
-            for (int el : row)
-                clickMapString += Integer.toString(el);
+        String clickMapString = arrayToString(clicks);
         String oXoReg = "020[0-2]{4}101[0-2]{4}020[0-2]*";
         String twXtwReg = "02020[0-2]{2}1[0-2]{3}1[0-2]{9}1[0-2]{3}1[0-2]{2}02020[0-2]*";
         String thXthReg = "02020201[0-2]{5}1[0-2]{7}1[0-2]{5}1[0-2]{7}1[0-2]{5}10202020";
@@ -154,5 +160,21 @@ public class Board extends GridLayout {
         if (clickMapString.matches(thXthReg))
             totalCount++;
         return totalCount;
+    }
+
+    public static String arrayToString(int[][] clickMap){
+        String cms = "";
+        for (int[] row : clickMap)
+            for (int el : row)
+                cms += Integer.toString(el);
+        return cms;
+    }
+
+    public static int[][] stringToArray(String cms){
+        int[][] clickMap = new int[7][7];
+        for (int row=0; row<7; row++)
+            for (int col=0; col<7; col++)
+                clickMap[row][col] = Integer.parseInt(cms.substring((row*7)+col, (row*7)+col));
+        return clickMap;
     }
 }
