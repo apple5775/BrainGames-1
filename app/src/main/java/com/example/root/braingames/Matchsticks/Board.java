@@ -60,15 +60,18 @@ public class Board extends GridLayout {
         }
     }
 
+/*
     public Board(Activity activity, String goal){
         super(activity);
         int[][] goalMap = stringToArray(goal);
         sticks = new Button[7][7];
+
         clickMap = makeDefaultBoard();
         Log.i("Stat", "Made the map");
         for (int row=0; row<7; row++){
             for (int col=0; col<7; col++){
-                Button button = new Button(activity, row, col);
+                //Button button = new Button(activity, row, col);
+                Button button = new Button(matchstickGame, row, col);
                 if (row % 2 == 0 && col % 2 == 1)
                     button.setImageResource(R.drawable.matchstick_horizontal);
                 if (row % 2 == 1 && col % 2 == 0)
@@ -90,7 +93,22 @@ public class Board extends GridLayout {
             }
         }
         Log.i("Stat", "adjusted board");
+    }*/
+
+    public Board(MatchstickGame matchstickG, String goal) {
+        this(matchstickG);
+        int[][] goalMap = stringToArray(goal);
+        for (int row = 0; row < 7; row++) {
+            for (int col = 0; col < 7; col++) {
+                int pos = (row * 7) + col;
+                if (goalMap[row][col] == 0 && clickMap[row][col] != 0) {
+                    clickMap[row][col] = 0;
+                    sticks[row][col].setVisibility(View.INVISIBLE);
+                }
+            }
+        }
     }
+
 
     public static int[][] makeDefaultBoard(){
         int[][] defaultBoard = new int[7][7];

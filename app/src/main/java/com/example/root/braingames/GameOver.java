@@ -44,10 +44,10 @@ public class GameOver extends Activity {
         TextView statusView = (TextView) findViewById(R.id.status);
         statusView.setText(text);
 
-        if (winningMap != ""){
-            Board board = new Board(this, winningMap);
-            ((LinearLayout)findViewById(R.id.solution)).addView(board);
-        }
+        //if (winningMap != ""){
+          //  Board board = new Board(this, winningMap);
+          //  ((LinearLayout)findViewById(R.id.solution)).addView(board);
+        //}
 
         ImageButton menu = (ImageButton) findViewById(R.id.menu);
         menu.setOnClickListener(new View.OnClickListener() {
