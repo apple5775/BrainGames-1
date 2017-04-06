@@ -9,6 +9,7 @@ import com.example.root.braingames.R;
 
 public class Board extends GridLayout {
     public int[][] clickMap;
+    public int maxClick;
     public Button[][] sticks;
     private MatchstickGame matchstickGame;
 
@@ -20,6 +21,7 @@ public class Board extends GridLayout {
         matchstickGame = matchstickG;
         clickMap = makeDefaultBoard();
         sticks = new Button[7][7];
+        maxClick = (7/2) * ((7+1)/2) + ((7+1)/2) * (7/2);
         OnClickListener boardOnClickListener;
 
         boardOnClickListener = new OnClickListener() {
@@ -76,14 +78,15 @@ public class Board extends GridLayout {
         for (int r=0; r<7; r++)
             for (int c=0; c<7; c++)
                 if (r % 2 != c % 2)
-                    defaultBoard[r][c] = (c%2)+1;
+                    defaultBoard[r][c] = (c % 2) + 1;
         return defaultBoard;
     }
 
-    public boolean hasExtraneous(){
-        return hasExtraneous(clickMap);
+    public boolean hasExtraneous() {
+        return !(getNonExtraneousMap(clickMap) == null);
     }
 
+    //Different spec for extraneous
     public static boolean hasExtraneous(int[][] clicks){
         for (int row=0; row<7; row++)
             for (int col=(row+1)%2; col<7; col += 2) {
@@ -148,18 +151,84 @@ public class Board extends GridLayout {
         String oXoReg = "020[0-2]{4}101[0-2]{4}020[0-2]*";
         String twXtwReg = "02020[0-2]{2}1[0-2]{3}1[0-2]{9}1[0-2]{3}1[0-2]{2}02020[0-2]*";
         String thXthReg = "02020201[0-2]{5}1[0-2]{7}1[0-2]{5}1[0-2]{7}1[0-2]{5}10202020";
+
         int totalCount = 0;
         //Check for 1x1 squares and 2x2 squares
         for (int start=0; start<clickMapString.length(); start++){
-            if (clickMapString.substring(start).matches(oXoReg))
+            if (clickMapString.substring(start).matches(oXoReg)) {
                 totalCount++;
-            if (clickMapString.substring(start).matches(twXtwReg))
+            }
+            if (clickMapString.substring(start).matches(twXtwReg)) {
                 totalCount++;
+            }
         }
         //Check for 3x3 squares
-        if (clickMapString.matches(thXthReg))
+        if (clickMapString.matches(thXthReg)) {
             totalCount++;
+        }
         return totalCount;
+    }
+
+    public static int[][] getNonExtraneousMap(int[][] clicks){
+        int[][] noExtraClickMap;
+        String clickMapString = arrayToString(clicks);
+        String oXoReg = "020[0-2]{4}101[0-2]{4}020[0-2]*";
+        String twXtwReg = "02020[0-2]{2}1[0-2]{3}1[0-2]{9}1[0-2]{3}1[0-2]{2}02020[0-2]*";
+        String thXthReg = "02020201[0-2]{5}1[0-2]{7}1[0-2]{5}1[0-2]{7}1[0-2]{5}10202020";
+        boolean hasExtraneous;
+
+        StringBuffer noExtraClickMapStr = new StringBuffer(clickMapString.length()); //new
+        for (int i = 0; i < noExtraClickMapStr.capacity(); i++) noExtraClickMapStr.insert(i, '0');
+
+        int totalCount = 0;
+        //Check for 1x1 squares and 2x2 squares
+        for (int start=0; start<clickMapString.length(); start++){
+            if (clickMapString.substring(start).matches(oXoReg)) {
+                totalCount++;
+                noExtraClickMapStr.setCharAt(start+1, '2');
+                noExtraClickMapStr.setCharAt(start+7, '1');
+                noExtraClickMapStr.setCharAt(start+9, '1');
+                noExtraClickMapStr.setCharAt(start+15, '2');
+            }
+            if (clickMapString.substring(start).matches(twXtwReg)) {
+                totalCount++;
+                noExtraClickMapStr.setCharAt(start+1, '2');
+                noExtraClickMapStr.setCharAt(start+3, '2');
+                noExtraClickMapStr.setCharAt(start+7, '1');
+                noExtraClickMapStr.setCharAt(start+11, '1');
+                noExtraClickMapStr.setCharAt(start+21, '1');
+                noExtraClickMapStr.setCharAt(start+25, '1');
+                noExtraClickMapStr.setCharAt(start+29, '2');
+                noExtraClickMapStr.setCharAt(start+31, '2');
+            }
+        }
+        //Check for 3x3 squares
+        if (clickMapString.matches(thXthReg)) {
+            totalCount++;
+            noExtraClickMapStr.setCharAt(1, '2');
+            noExtraClickMapStr.setCharAt(3, '2');
+            noExtraClickMapStr.setCharAt(5, '2');
+            noExtraClickMapStr.setCharAt(7, '1');
+            noExtraClickMapStr.setCharAt(13, '1');
+            noExtraClickMapStr.setCharAt(21, '1');
+            noExtraClickMapStr.setCharAt(27, '1');
+            noExtraClickMapStr.setCharAt(35, '1');
+            noExtraClickMapStr.setCharAt(41, '1');
+            noExtraClickMapStr.setCharAt(43, '2');
+            noExtraClickMapStr.setCharAt(45, '2');
+            noExtraClickMapStr.setCharAt(47, '2');
+        }
+        hasExtraneous = !clickMapString.equals(noExtraClickMapStr.toString());
+        Log.i("Board comp", "" + hasExtraneous);
+        Log.i("Board", noExtraClickMapStr.toString());
+        Log.i("Board", clickMapString);
+
+        if (!hasExtraneous) {
+            return null;
+        } else {
+            noExtraClickMap = stringToArray(noExtraClickMapStr.toString());
+            return noExtraClickMap;
+        }
     }
 
     public static String arrayToString(int[][] clickMap){
@@ -174,7 +243,7 @@ public class Board extends GridLayout {
         int[][] clickMap = new int[7][7];
         for (int row=0; row<7; row++)
             for (int col=0; col<7; col++)
-                clickMap[row][col] = Integer.parseInt(cms.substring((row*7)+col, (row*7)+col));
+                clickMap[row][col] = Integer.parseInt(cms.substring((row*7)+col, (row*7)+col+1));
         return clickMap;
     }
 }

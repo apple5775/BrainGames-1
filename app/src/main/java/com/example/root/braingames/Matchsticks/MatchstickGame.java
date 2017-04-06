@@ -96,27 +96,61 @@ public class MatchstickGame extends Activity {
         }
     }
 
+    public static int countMatches(int[][] boardMap) {
+        int matchNum = 0;
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 7; j++)
+                if (boardMap[i][j] != 0) matchNum++;
+        }
+        return matchNum;
+    }
+
     public void generateProblem(){
-        clicksAllowed = (int)(Math.random() * 5) + 3;
+        clicksAllowed = (int)(Math.random() * 5) + 2;
         int[][] clickMap = Board.makeDefaultBoard();
+        int matchTotal = board.maxClick;
         boolean tryAgain = true;
-        while (tryAgain){
+        while (tryAgain) {
             clickMap = Board.makeDefaultBoard();
             HashSet<Integer> toRemove = new HashSet<>();
-            while (toRemove.size() < clicksAllowed){
+            while (toRemove.size() < clicksAllowed) {
                 int rand = 0;
-                while (rand/7%2 == rand%7%2)
-                    rand = (int)(Math.random() * 49);
+                while (rand / 7 % 2 == rand % 7 % 2)
+                    rand = (int) (Math.random() * 49);
                 toRemove.add(rand);
             }
             for (int el : toRemove)
-                clickMap[el/7][el%7] = 0;
-            tryAgain = Board.hasExtraneous(clickMap) || Board.getSquares(clickMap) == 0;
-        }
-        winningMap = clickMap;
-        squaresGoal = Board.getSquares(clickMap);
-        TextView stip = (TextView) findViewById(R.id.stip);
+                clickMap[el / 7][el % 7] = 0;
 
+
+            //some testcases:
+            //clickMap = Board.stringToArray("0202020100010102020201000101020202010101010202020");   2 matches 8 squares
+            //clickMap = Board.stringToArray("0202020101010102020001000101000002010001010202020"); 5 matches 5 sqares
+
+            int[][] tempBoard;
+            if (Board.getSquares(clickMap) > 0) {
+                // There are more than one squares, now remove extraneous matches around it.
+                if ((tempBoard = Board.getNonExtraneousMap(clickMap)) != null) {
+                    clickMap = tempBoard;
+                    matchTotal = countMatches(clickMap);
+                    // If there are less than 16 matches left, regenerate a board.
+                    tryAgain = (matchTotal < 16);
+                } else {
+                    matchTotal = countMatches(clickMap);
+                    tryAgain = false;
+                }
+             }
+
+            //tryAgain = Board.hasExtraneous(clickMap) || Board.getSquares(clickMap) == 0;
+        }
+
+        winningMap = clickMap;
+        Log.i("Game winning map", Board.arrayToString(winningMap));
+        clicksAllowed = board.maxClick - matchTotal;
+        Log.i("Game click total", ""+clicksAllowed);
+        squaresGoal = Board.getSquares(clickMap);
+
+        TextView stip = (TextView) findViewById(R.id.stip);
         String text = "Remove " + clicksAllowed + " matchsticks \n to form \n " + squaresGoal;
         if (clicksAllowed == 1)
             text = " matchstick \n to form \n " + squaresGoal;
