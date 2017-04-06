@@ -20,7 +20,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         gameButton1 = (ImageButton) findViewById(R.id.msGameButton);
-//        gameButton1.setImageResource(R.drawable.matchstick_horizontal);
         gameButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -28,8 +27,7 @@ public class MainActivity extends Activity {
                 Intent gameIntent = new Intent(MainActivity.this, MatchstickGame.class);
                 gameIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(gameIntent);
-                //MatchstickGame mg = new MatchstickGame(MainActivity.this);
-                //MainActivity.this.inFocus = mg;
+                finish();
             }
         });
 
@@ -42,6 +40,7 @@ public class MainActivity extends Activity {
                 Intent matching = new Intent(MainActivity.this, MatchingGame.class);
                 matching.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(matching);
+                finish();
             }
         });
     }
@@ -49,16 +48,10 @@ public class MainActivity extends Activity {
     @Override
     public void onPause(){
         super.onPause();
-//        inFocus.pauseActivity();
     }
 
     @Override
     public void onResume(){
         super.onResume();
-//        inFocus.resumeActivity();
     }
-
-//    public void pauseActivity(){}
-//    public void resumeActivity(){}
-
 }

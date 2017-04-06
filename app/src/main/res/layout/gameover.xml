@@ -3,8 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:weightSum="5"
-    android:id="@+id/gameOverMain">
+    android:weightSum="5">
     <TextView
         android:id="@+id/status"
         android:layout_width="match_parent"
@@ -14,6 +13,14 @@
         android:text="Game Over!"
         android:textSize="18pt"
         android:textColor="@color/colorPrimary"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/solution"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

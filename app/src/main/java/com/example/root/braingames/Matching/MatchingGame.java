@@ -25,7 +25,4 @@ public class MatchingGame extends Activity {
             for (Button button : row)
                 gridLayout.addView(button, button.getParams(1/4, 1/4));
     }
-
-    public void pauseActivity(){}
-    public void resumeActivity(){}
 }

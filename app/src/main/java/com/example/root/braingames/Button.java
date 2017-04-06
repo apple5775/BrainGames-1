@@ -2,6 +2,7 @@ package com.example.root.braingames;
 
 import android.app.Activity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 
