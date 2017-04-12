@@ -21,8 +21,7 @@ public class GameOver extends Activity {
         setContentView(R.layout.gameover);
 
         Intent overIntent = getIntent();
-        String winLose = overIntent.getStringExtra("GAME_STATUS");
-        String winningMap = overIntent.getStringExtra("WINNING_MAP");
+        String whichgame = overIntent.getStringExtra("FROM_CLASS");
 
         from = null;
         try {
@@ -31,23 +30,33 @@ public class GameOver extends Activity {
             Log.i("Error", "Didn't find from class");
         }
 
-        Log.i("In Game Over", winLose);
-        String text;
+        if (whichgame.equals("com.example.root.braingames.Matchsticks.MatchstickGame")) {
+            String winLose = overIntent.getStringExtra("GAME_STATUS");
+            String winningMap = overIntent.getStringExtra("WINNING_MAP");
+            Log.i("In Game Over", winLose);
+            String text;
 
-        if (winLose.equals("gameWon")) {
-            text = "Game Over!" + "\n You won!";
-        } else if (winLose.equals("gameLost")) {
-            text = "Game Over!" + "\n Sorry, you lost.";
-        } else {
-            text = "Game Over!";
+            if (winLose.equals("gameWon")) {
+                text = "Game Over!" + "\n You won!";
+            } else if (winLose.equals("gameLost")) {
+                text = "Game Over!" + "\n Sorry, you lost.";
+            } else {
+                text = "Game Over!";
+            }
+            TextView statusView = (TextView) findViewById(R.id.status);
+            statusView.setText(text);
+
+            //if (winningMap != ""){
+            //  Board board = new Board(this, winningMap);
+            //  ((LinearLayout)findViewById(R.id.solution)).addView(board);
+            //}
         }
-        TextView statusView = (TextView) findViewById(R.id.status);
-        statusView.setText(text);
 
-        //if (winningMap != ""){
-          //  Board board = new Board(this, winningMap);
-          //  ((LinearLayout)findViewById(R.id.solution)).addView(board);
-        //}
+        if (whichgame.equals("com.example.root.braingames.Matching.MatchingGame")){
+            String cardsflippy = overIntent.getStringExtra("CARDS_FLIPPED");
+            TextView statusView = (TextView) findViewById(R.id.status);
+            statusView.setText("Game Over! \n" + cardsflippy +" "+ "cards flipped (minimum is 16)");
+        }
 
         ImageButton menu = (ImageButton) findViewById(R.id.menu);
         menu.setOnClickListener(new View.OnClickListener() {
